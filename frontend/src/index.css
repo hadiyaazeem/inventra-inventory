@@ -1,0 +1,191 @@
+@import 'tailwindcss';
+
+@theme {
+  /* Warm charcoal surfaces (stone family) instead of blue-tinted navy/slate. */
+  --color-bg: #0c0a09;
+  --color-surface: #171310;
+  --color-surface-2: #1e1811;
+  --color-surface-3: #0a0807;
+  --color-sidebar: #100d0a;
+  /* Alternating landing-section backdrop: a distinct warm brass step so
+     consecutive sections read as clearly separate panels. */
+  --color-section-alt: #1c150d;
+
+  /* Copper — primary */
+  --color-primary: #b45309;
+  --color-primary-hover: #d97706;
+  --color-primary-soft: rgba(180, 83, 9, 0.18);
+  /* Teal — secondary (cool counterweight to the warm primary/accent pair) */
+  --color-secondary: #0f766e;
+  --color-secondary-hover: #14b8a6;
+  --color-secondary-soft: rgba(15, 118, 110, 0.18);
+  --color-secondary-fg: #5eead4;
+  /* Gold — accent (distinct from copper: more yellow, less brown) */
+  --color-accent: #ca8a04;
+  --color-accent-hover: #eab308;
+  --color-accent-soft: rgba(202, 138, 4, 0.18);
+
+  --color-success: #22c55e;
+  --color-success-soft: rgba(34, 197, 94, 0.16);
+  /* Warning sits apart from primary/accent (red-orange vs brown/gold) so a
+     "low stock" badge is never mistaken for a brand-colored button. */
+  --color-warning: #f97316;
+  --color-warning-soft: rgba(249, 115, 22, 0.16);
+  --color-danger: #ef4444;
+  --color-danger-soft: rgba(239, 68, 68, 0.16);
+
+  --color-text: #faf8f5;
+  --color-text-secondary: #a8a29e;
+  --color-text-muted: #78716c;
+  --color-border: #292420;
+  --color-border-strong: #44403c;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --shadow-md: 0 8px 20px -6px rgba(0, 0, 0, 0.55), 0 2px 6px -2px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 20px 45px -12px rgba(0, 0, 0, 0.6), 0 6px 16px -6px rgba(0, 0, 0, 0.45);
+  --shadow-glow-primary: 0 10px 30px -8px rgba(180, 83, 9, 0.55);
+  --shadow-glow-secondary: 0 10px 30px -8px rgba(15, 118, 110, 0.55);
+  --shadow-glow-accent: 0 10px 30px -8px rgba(202, 138, 4, 0.55);
+
+  --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: 'IBM Plex Sans Condensed', 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  --animate-shimmer: shimmer 1.6s ease-in-out infinite;
+  --animate-orb-drift: orb-drift 14s ease-in-out infinite;
+  --animate-scroll-dot: scroll-dot 1.8s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+@keyframes orb-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(3%, -4%) scale(1.08); }
+}
+
+@keyframes scroll-dot {
+  0% { transform: translateY(0); opacity: 1; }
+  70% { opacity: 0.3; }
+  100% { transform: translateY(14px); opacity: 0; }
+}
+
+@keyframes ripple {
+  from { transform: scale(0); opacity: 0.45; }
+  to { transform: scale(1); opacity: 0; }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+html {
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--color-primary);
+  color: white;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-strong);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Layered card: soft elevated shadow, generous rounding, a slim left accent
+   bar (this design's repeatable signature) instead of a flat top stripe. */
+@utility glass-card {
+  position: relative;
+  background: linear-gradient(165deg, var(--color-surface-2) 0%, var(--color-surface) 55%);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+@utility glass-panel {
+  background: color-mix(in srgb, var(--color-surface) 88%, transparent);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border-strong);
+}
+
+@utility btn-glow {
+  box-shadow: var(--shadow-glow-primary);
+  transition: filter 0.15s var(--ease-standard), transform 0.15s var(--ease-standard), box-shadow 0.15s var(--ease-standard);
+  &:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+    box-shadow: 0 14px 34px -8px rgba(180, 83, 9, 0.65);
+  }
+}
+
+@utility skeleton-shimmer {
+  background: linear-gradient(90deg, var(--color-surface-2) 25%, var(--color-surface-3) 37%, var(--color-surface-2) 63%);
+  background-size: 800px 100%;
+  animation: var(--animate-shimmer);
+}
+
+/* Faint blueprint/graph-paper grid backdrop for the app shell — crossed
+   hairlines instead of the soft dot-grid glassmorphism dashboards default to. */
+@utility dot-grid-bg {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Gradient wordmark / heading treatment — blue into cyan. */
+@utility text-gradient-brand {
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
